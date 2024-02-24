@@ -1,8 +1,8 @@
 #pragma once
-
+// макроопределениями, которые используются в программировании на языке C для включения функций, переменных и структур
 #define _XOPEN_SOURCE   600
 #define _POSIX_C_SOURCE 200112L
-
+// другие заголовочные файлы
 #include <ncurses.h>
 #include <string.h>
 #include <unistd.h>
@@ -10,36 +10,44 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <stddef.h>
+#include <wchar.h>
 
-#define MIN_SPEED 0
-#define MAX_SPEED 50
-#define DEFAULT_SPEED 25
-#define DEFAULT_COLOR 2
+#define DEFAULT_COLOR 1
 
-extern struct sSettings {
-    int speed;
-    int color;
-} Settings;
+extern struct mx_set {
+    int spd;
+    int paint;
+} set;
 
-typedef struct sCharacter {
+typedef struct mx_sym {
     char symbol;
-    int color;
-} Character;
+    int paint;
+} sym;
 
-extern struct sScreen {
-    int width;
-    int height;
-    Character ***dots;
-} Screen;
+extern struct mx_trm {
+    int w;
+    int h;
+    sym ***sym;
+} terminal;
 
+bool mx_isdigit(int c);
+int mx_atoi(const char *str);
+int mx_rand(int min, int max);
 int mx_strcmp(const char *s1, const char *s2);
-void mx_printerr(char *str);
 int mx_strlen(char *s);
-
-void mx_draw_run(void (*action)(void));
-void mx_draw_intro();
-void mx_draw_rain();
+void mx_draw_terminal();
+void mx_exit(int status);
 void mx_init();
 void mx_init_colors();
-void mx_on_key_press();
+void mx_print_chars(void (*action)(void));
+void mx_print_syms(void);
+void mx_printerr(char *str);
+void mx_ran_for_arr(void);
+void mx_settings();
+void mx_stairs();
+void mx_start();
+void mx_top_str(void);
+void mx_turn_on(bool flag);
+void mx_wake_up();
+
 
